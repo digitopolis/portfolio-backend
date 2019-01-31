@@ -21,6 +21,8 @@ ActiveRecord::Schema.define(version: 2019_01_28_212754) do
     t.string "media"
     t.text "bio"
     t.string "img_url"
+    t.string "twitter"
+    t.string "instagram"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -28,7 +30,7 @@ ActiveRecord::Schema.define(version: 2019_01_28_212754) do
   create_table "works", force: :cascade do |t|
     t.string "title"
     t.string "media"
-    t.date "date"
+    t.integer "year"
     t.text "statement"
     t.string "img_url"
     t.bigint "artist_id"

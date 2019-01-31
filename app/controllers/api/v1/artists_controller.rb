@@ -18,6 +18,6 @@ class Api::V1::ArtistsController < ApplicationController
 	end
 
 	def artist_params
-	 	params.permit(:name, :location, :media, :bio, :img_url)
+	 	params.permit(:name, :location, :media, :bio, :img_url, :twitter, :instagram)
 	end
 end

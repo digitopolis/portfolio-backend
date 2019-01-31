@@ -6,6 +6,8 @@ class CreateArtists < ActiveRecord::Migration[5.2]
       t.string :media
       t.text :bio
       t.string :img_url
+			t.string :twitter
+			t.string :instagram
 
       t.timestamps
     end

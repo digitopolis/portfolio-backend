@@ -27,6 +27,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
+# Define the shape of data objects returned when fetching from API
 gem 'active_model_serializers'
 
 group :development, :test do
