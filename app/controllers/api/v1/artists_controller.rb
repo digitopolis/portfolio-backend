@@ -10,6 +10,19 @@ class Api::V1::ArtistsController < ApplicationController
 	  render json: @artist
 	end
 
+	def new
+	  @artist = Artist.new
+	end
+
+	def create
+	  @artist = Artist.create(artist_params)
+		if @artist.valid?
+			render json: @artist, status: :accepted
+		else
+			render json: { errors: @artist.errors.full_messages }, status: :unprocessible_entity
+		end
+	end
+
 
 	private
 
