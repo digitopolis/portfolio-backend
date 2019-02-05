@@ -10,9 +10,22 @@ class Api::V1::WorksController < ApplicationController
 	  render json: @work
 	end
 
+	def create
+	  @work = Work.create(work_params)
+		if @work.valid?
+			render json: @work, status: :accepted
+		else
+			render json: { errors: @work.errors.full_messages }, status: :unprocessible_entity
+		end
+	end
+
 	private
 
 	def find_work
 	  @work = Work.find(params[:id])
+	end
+
+	def work_params
+	  params.permit(:title, :media, :year, :img_url, :statement, :artist_id)
 	end
 end
