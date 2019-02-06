@@ -17,9 +17,9 @@ class Api::V1::ArtistsController < ApplicationController
 	def create
 	  @artist = Artist.create(artist_params)
 		if @artist.valid?
-			render json: @artist, status: :accepted
+			render json: { artist: ArtistSerializer.new(@artist) }, status: :created
 		else
-			render json: { errors: @artist.errors.full_messages }, status: :unprocessible_entity
+			render json: { error: 'failed to create artist' }, status: :not_acceptable
 		end
 	end
 
@@ -31,6 +31,6 @@ class Api::V1::ArtistsController < ApplicationController
 	end
 
 	def artist_params
-	 	params.permit(:name, :location, :media, :bio, :img_url, :twitter, :instagram)
+	 	params.permit(:username, :password, :name, :location, :media, :bio, :img_url, :twitter, :instagram)
 	end
 end
