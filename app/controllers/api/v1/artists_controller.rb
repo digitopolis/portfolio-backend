@@ -1,4 +1,5 @@
 class Api::V1::ArtistsController < ApplicationController
+	skip_before_action :authorized, only: [:create]
 	before_action :find_artist, only: [:show]
 
 	def index
@@ -17,7 +18,8 @@ class Api::V1::ArtistsController < ApplicationController
 	def create
 	  @artist = Artist.create(artist_params)
 		if @artist.valid?
-			render json: { artist: ArtistSerializer.new(@artist) }, status: :created
+			@token = encode_token(user_id: @artist.id)
+			render json: { artist: ArtistSerializer.new(@artist), jwt: @token }, status: :created
 		else
 			render json: { error: 'failed to create artist' }, status: :not_acceptable
 		end
