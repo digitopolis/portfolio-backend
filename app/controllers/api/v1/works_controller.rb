@@ -1,5 +1,5 @@
 class Api::V1::WorksController < ApplicationController
-	before_action :find_work, only: [:show]
+	before_action :find_work, only: [:show, :destroy]
 
 	def index
 	  @works = Work.all
@@ -17,6 +17,10 @@ class Api::V1::WorksController < ApplicationController
 		else
 			render json: { errors: @work.errors.full_messages }, status: :unprocessible_entity
 		end
+	end
+
+	def destroy
+	  @work.destroy
 	end
 
 	private
