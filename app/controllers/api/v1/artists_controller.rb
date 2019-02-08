@@ -2,6 +2,10 @@ class Api::V1::ArtistsController < ApplicationController
 	skip_before_action :authorized, only: [:index, :create]
 	before_action :find_artist, only: [:show]
 
+	def profile
+		render json: { artist: ArtistSerializer.new(current_user) }, status: :accepted
+	end
+
 	def index
 	  @artists = Artist.all
 		render json: @artists
