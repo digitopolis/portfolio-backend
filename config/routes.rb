@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 			post '/login', to: 'auth#create'
 			get '/profile', to: 'artists#profile'
 			resources :works
+			resources :comments
   	end
   end
 end
