@@ -1,5 +1,11 @@
 class Api::V1::CommentsController < ApplicationController
+	skip_before_action :authorized, only: [:index]
 	before_action :find_comment, only: [:destroy]
+
+	def index
+	  @comments = Comment.all
+		render json: @comments
+	end
 
 	def create
 	  @comment = Comment.create(comment_params)
