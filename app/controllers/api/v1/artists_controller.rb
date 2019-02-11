@@ -1,5 +1,10 @@
 class Api::V1::ArtistsController < ApplicationController
-	before_action :find_artist, only: [:show]
+	skip_before_action :authorized, only: [:index, :create]
+	before_action :find_artist, only: [:show, :update]
+
+	def profile
+		render json: { artist: ArtistSerializer.new(current_user) }, status: :accepted
+	end
 
 	def index
 	  @artists = Artist.all
@@ -17,10 +22,17 @@ class Api::V1::ArtistsController < ApplicationController
 	def create
 	  @artist = Artist.create(artist_params)
 		if @artist.valid?
-			render json: @artist, status: :accepted
+			@token = encode_token(user_id: @artist.id)
+			render json: { artist: ArtistSerializer.new(@artist), jwt: @token }, status: :created
 		else
-			render json: { errors: @artist.errors.full_messages }, status: :unprocessible_entity
+			render json: { error: 'failed to create artist' }, status: :not_acceptable
 		end
+	end
+
+	def update
+	  if @artist.update(artist_params)
+	  	render json: { artist: ArtistSerializer.new(@artist) }, status: :accepted
+	  end
 	end
 
 
@@ -31,6 +43,6 @@ class Api::V1::ArtistsController < ApplicationController
 	end
 
 	def artist_params
-	 	params.permit(:name, :location, :media, :bio, :img_url, :twitter, :instagram)
+	 	params.permit(:username, :password, :name, :location, :media, :bio, :img_url, :twitter, :instagram)
 	end
 end

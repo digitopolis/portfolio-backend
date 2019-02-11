@@ -1,4 +1,5 @@
 class Api::V1::WorksController < ApplicationController
+	skip_before_action :authorized, only: [:index]
 	before_action :find_work, only: [:show, :destroy]
 
 	def index
