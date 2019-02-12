@@ -31,6 +31,6 @@ class Api::V1::WorksController < ApplicationController
 	end
 
 	def work_params
-	  params.permit(:title, :media, :year, :img_url, :statement, :artist_id)
+	  params.require(:work).permit(:title, :media, :year, :img_url, :statement, :artist_id)
 	end
 end
