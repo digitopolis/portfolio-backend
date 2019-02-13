@@ -1,6 +1,6 @@
 class Api::V1::ArtistsController < ApplicationController
 	skip_before_action :authorized, only: [:index, :create]
-	before_action :find_artist, only: [:show, :update]
+	before_action :find_artist, only: [:show, :update, :destroy]
 
 	def profile
 		render json: { artist: ArtistSerializer.new(current_user) }, status: :accepted
@@ -33,6 +33,10 @@ class Api::V1::ArtistsController < ApplicationController
 	  if @artist.update(artist_params)
 	  	render json: { artist: ArtistSerializer.new(@artist) }, status: :accepted
 	  end
+	end
+
+	def destroy
+	  @artist.destroy
 	end
 
 
